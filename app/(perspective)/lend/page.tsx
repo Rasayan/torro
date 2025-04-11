@@ -2,6 +2,9 @@
 
 import { IoIosArrowDown } from "react-icons/io";
 
+import { RxCross2 } from "react-icons/rx";
+
+
 import { useState } from "react";
 
 export default function DataForm() {
@@ -10,6 +13,7 @@ export default function DataForm() {
     const [approved, setApproved] = useState(false);
     const [sampleFile, setSampleFile] = useState(null);
     const [uploadFile, setUploadFile] = useState(null);
+    const [showEncryptedArea, setShowEncryptedArea] = useState(false);
 
     return (
         <div className="w-full h-screen scroll-auto flex flex-col justify-center items-center">
@@ -90,55 +94,72 @@ export default function DataForm() {
                         </div>
 
                         {/* Upload File */}
-                        <div className="w-full flex flex-col justify-start items-start">
-                            <label className="tracking-wide text-lg">Upload File /-</label>
+<div className="w-full flex flex-col justify-start items-start">
+  <label className="tracking-wide text-lg">Upload File /-</label>
 
-                            <input
-                                id="upload-file"
-                                type="file"
-                                accept=".txt,.csv,.xlsx"
-                                className="hidden"
-                                onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    if (file && file.size <= 500 * 1024 * 1024 * 1024) {
-                                        setUploadFile(file);
-                                    } else {
-                                        alert("File must be less than 500GB.");
-                                    }
-                                }}
-                            />
+  <input
+    id="upload-file"
+    type="file"
+    accept=".txt,.csv,.xlsx"
+    className="hidden"
+    onChange={(e) => {
+      const file = e.target.files[0];
+      if (file && file.size <= 500 * 1024 * 1024 * 1024) {
+        setUploadFile(file);
+        setShowEncryptedArea(false); // Reset view until encryption is selected
+      } else {
+        alert("File must be less than 500GB.");
+      }
+    }}
+  />
 
-                            <label
-                                htmlFor="upload-file"
-                                className="rounded-lg px-5 py-1 border-2 border-indigo-400 bg-indigo-950 text-indigo-300 mt-2 cursor-pointer hover:bg-indigo-400 hover:text-indigo-950 duration-300"
-                            >
-                                {uploadFile ? uploadFile.name : "Select File"}
-                            </label>
-                        </div>
+  {uploadFile ? (
+    <div className="flex items-center gap-2 mt-2">
+      <p className="px-4 py-1 border-2 border-indigo-400 bg-indigo-950 text-indigo-300 rounded-lg">{uploadFile.name}</p>
+      <button
+        onClick={() => {
+          setUploadFile(null);
+          setShowEncryptedArea(false);
+          setSelectedEncryption("Select from list");
+        }}
+        className="text-red-500 text-xl font-bold hover:text-red-700 transition duration-300"
+        title="Re-upload"
+      >
+        ⟳
+      </button>
+    </div>
+  ) : (
+    <label
+      htmlFor="upload-file"
+      className="rounded-lg px-5 py-1 border-2 border-indigo-400 bg-indigo-950 text-indigo-300 mt-2 cursor-pointer hover:bg-indigo-400 hover:text-indigo-950 duration-300"
+    >
+      Select File
+    </label>
+  )}
+</div>
+
                     </div>
 
 
                     <div className="w-full flex flex-col justify-start items-start">
   <label className="tracking-wide text-lg">Select Encryption /-</label>
 
-  <div className="flex justify-center items-center relative mt-2">
-    {/* Selected label */}
-    <p className="w-fit border-2 border-r-0 border-zinc-600 rounded-l-lg px-5 py-1">
+  <div className="flex justify-start items-center mt-2 relative">
+    {/* Dropdown */}
+    <p className="border-2 border-r-0 border-zinc-600 rounded-l-lg px-5 py-1">
       {selectedEncryption}
     </p>
 
-    {/* Toggle Button */}
     <button
       type="button"
       onClick={() => setShowDropdown(!showDropdown)}
-      className="rounded-r-lg px-5 py-1 border-2 border-indigo-400 bg-indigo-950 text-indigo-300 cursor-pointer hover:bg-indigo-400 hover:text-indigo-950 duration-300"
+      className="rounded-r-lg px-5 py-2 border-2 border-indigo-400 bg-indigo-950 text-indigo-300 cursor-pointer hover:bg-indigo-400 hover:text-indigo-950 duration-300"
     >
-      ▼
+      <IoIosArrowDown />
     </button>
 
-    {/* Dropdown Menu */}
     {showDropdown && (
-      <div className="w-fit absolute top-10 left-0 bg-zinc-800 rounded-xl flex flex-col justify-center items-start px-1 py-2 gap-2 z-10 border border-zinc-600">
+      <div className="absolute top-10 left-0 bg-zinc-800 rounded-xl px-1 py-2 z-10 border border-zinc-600">
         {["Full Homomorphic", "Partial Homomorphic", "Half Homomorphic"].map((option) => (
           <p
             key={option}
@@ -146,23 +167,45 @@ export default function DataForm() {
               setSelectedEncryption(option);
               setShowDropdown(false);
             }}
-            className="w-full rounded-lg hover:bg-zinc-700 duration-300 px-4 py-2 cursor-pointer"
+            className="px-4 py-2 w-full hover:bg-zinc-700 rounded-lg cursor-pointer duration-300"
           >
             {option}
           </p>
         ))}
       </div>
     )}
+
+    {/* Encrypt Button */}
+    {uploadFile && selectedEncryption !== "Select from list" && (
+      <button
+        type="button"
+        onClick={() => setShowEncryptedArea(true)}
+        className="px-4 py-1 ml-2 border-2 border-amber-400 bg-amber-950 text-amber-300 rounded-lg hover:bg-amber-400 hover:text-amber-950 duration-300"
+      >
+        Encrypt
+      </button>
+    )}
   </div>
 </div>
 
 
 
-                    <div id="clause_1" className="w-full flex flex-col justify-start items-start">
-                        <label className="tracking-wide text-lg">Encrypted View /-</label>
 
-                        <textarea cols={100} rows={5} className="border-2 border-zinc-500 rounded-lg w-full text-white outline-none px-2 py-1"/>
-                    </div>
+<div className="w-full flex flex-col justify-start items-start">
+  <label className="tracking-wide text-lg">Encrypted View /-</label>
+
+  {!showEncryptedArea ? (
+    <p className="text-red-400 text-base mt-2">First upload a file and select encryption</p>
+  ) : (
+    <textarea
+      cols={100}
+      rows={5}
+      className="border-2 border-zinc-500 rounded-lg w-full text-white outline-none px-2 py-1 mt-2"
+    />
+  )}
+</div>
+
+
 
                     <div className="flex justify-center items-center gap-3">
                         <button className="rounded-lg px-5 py-1 border-2 border-indigo-400 bg-indigo-950 text-indigo-300 cursor-pointer hover:bg-indigo-400 hover:text-indigo-950 duration-300">Upload</button>

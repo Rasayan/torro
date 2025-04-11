@@ -15,7 +15,7 @@ export default function Select() {
 
                     <p className="font-sans my-2">If you want to lend encrypted data for organizations to use and train their models.</p>
 
-                    <a href="#" className="rounded-lg bg-emerald-950 border-2 border-emerald-400 text-emerald-300 px-5 py-1 mt-3">select</a>
+                    <a href="/lend" className="rounded-lg bg-emerald-950 border-2 border-emerald-400 text-emerald-300 px-5 py-1 mt-3">select</a>
                 </div>
             </div>
         </div>

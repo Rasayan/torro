@@ -8,7 +8,7 @@ export default function Home() {
         <h2 className="text-6xl text-center font-serif">Contribute your data for training AI models without revealing it.</h2>
 
         <div className="flex justify-center items-center gap-4">
-          <a href="#" className="rounded-full border-2 border-blue-400 bg-blue-400 px-7 py-1.5 font-semibold text-blue-950 hover:bg-blue-950 hover:text-blue-400 duration-200">
+          <a href="/select" className="rounded-full border-2 border-blue-400 bg-blue-400 px-7 py-1.5 font-semibold text-blue-950 hover:bg-blue-950 hover:text-blue-400 duration-200">
             Try Torro
           </a>
 
