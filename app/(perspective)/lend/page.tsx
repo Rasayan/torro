@@ -122,7 +122,7 @@ export default function DataForm() {
           setShowEncryptedArea(false);
           setSelectedEncryption("Select from list");
         }}
-        className="text-red-500 text-xl font-bold hover:text-red-700 transition duration-300"
+        className="text-zinc-300 text-xl font-bold hover:text-indigo-300 transition duration-300"
         title="Re-upload"
       >
         ⟳

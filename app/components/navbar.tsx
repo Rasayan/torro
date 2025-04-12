@@ -12,7 +12,7 @@ export default function Navbar() {
             </div>
 
             <div className="w-[25%] flex justify-center items-center">
-                <a href="#" className="font-normal tracking-wider rounded-full border-2 border-amber-900 text-amber-400 hover:bg-amber-900 hover:text-amber-400 px-6 duration-200">
+                <a href="/login" className="font-normal tracking-wider rounded-full border-2 border-amber-900 text-amber-400 hover:bg-amber-900 hover:text-amber-400 px-6 duration-200">
                     Log In
                 </a>
             </div>

@@ -1,11 +1,6 @@
 "use client"
 
-import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
-
 export default function LogIn() {
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [selectedEncryption, setSelectedEncryption] = useState("Who are you?");
 
     return (
         <div className="w-full h-screen scroll-auto flex flex-col justify-center items-center">
